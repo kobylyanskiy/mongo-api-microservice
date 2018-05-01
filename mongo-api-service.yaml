@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-api
+  labels:
+    name: mongo-api
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+  clusterIP: None
+  selector:
+    app: mongo-api
