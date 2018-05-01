@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mongo-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-api
+    spec:
+      containers:
+      - name: mongo-api
+        image: gcr.io/spy-crowd/mongo-api:0.9.0
+        resources:
+          limits:
+            cpu: "0.2"
+          requests:
+            cpu: "0.2"
+        ports:
+        - containerPort: 5000
