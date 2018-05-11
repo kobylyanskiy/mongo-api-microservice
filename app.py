@@ -16,9 +16,10 @@ app = Flask(__name__)
 def agents():
     if request.method == 'POST':
         agent = request.get_json(silent=True)
-        print(agent)
+        agent_id = agents.insert_one(agent).inserted_id
         return json.dumps({
             'result': True,
+            'agent_id': agent_id,
         })
     else:
         return json.dumps({
