@@ -2,10 +2,14 @@ import json
 from pymongo import MongoClient
 from flask import Flask, request
 
-client = MongoClient('mongod-0.mongodb-service',
-                     username='admin',
-                     password='abc123',
-                     authMechanism='MONGODB-CR')
+
+replica1 = 'mongod-0.mongodb-service.default.svc.cluster.local:27017'
+replica2 = 'mongod-1.mongodb-service.default.svc.cluster.local:27017'
+replica3 = 'mongod-2.mongodb-service.default.svc.cluster.local:27017'
+uri = 'mongodb://admin:abc123@{},{},{}/test'.format(replica1, replica2, replica3)
+
+
+client = MongoClient(uri)
 db = client.test
 agents_db = db.agents
 
