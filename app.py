@@ -6,7 +6,7 @@ from flask import Flask, request
 replica1 = 'mongod-0.mongodb-service.default.svc.cluster.local:27017'
 replica2 = 'mongod-1.mongodb-service.default.svc.cluster.local:27017'
 replica3 = 'mongod-2.mongodb-service.default.svc.cluster.local:27017'
-uri = 'mongodb://admin:abc123@{},{},{}/test'.format(replica1, replica2, replica3)
+uri = 'mongodb://main_admin:abc123@{},{},{}/test'.format(replica1, replica2, replica3)
 
 
 client = MongoClient(uri)
