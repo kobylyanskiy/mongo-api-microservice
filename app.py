@@ -2,7 +2,7 @@ import json
 from pymongo import MongoClient
 from flask import Flask, request
 
-client = MongoClient('mongod-0',
+client = MongoClient('mongod-0.mongodb-service',
                      username='admin',
                      password='abc123',
                      authMechanism='MONGODB-CR')
