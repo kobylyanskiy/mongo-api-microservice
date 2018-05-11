@@ -11,6 +11,7 @@ uri = 'mongodb://main_admin:abc123@{},{},{}/test'.format(replica1, replica2, rep
 
 client = MongoClient(uri)
 db = client.test
+db.getSiblingDB('test').auth("main_admin", "abc123")
 agents_db = db.agents
 
 app = Flask(__name__)
