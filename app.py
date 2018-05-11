@@ -7,7 +7,7 @@ client = MongoClient('mongod-0',
                      password='abc123',
                      authMechanism='MONGODB-CR')
 db = client.test
-agents = db.agents
+agents_db = db.agents
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ app = Flask(__name__)
 def agents():
     if request.method == 'POST':
         agent = request.get_json(silent=True)
-        agent_id = agents.insert_one(agent).inserted_id
+        agent_id = agents_db.insert_one(agent).inserted_id
         return json.dumps({
             'result': True,
             'agent_id': agent_id,
