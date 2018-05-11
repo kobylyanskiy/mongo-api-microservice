@@ -11,7 +11,6 @@ uri = 'mongodb://main_admin:abc123@{},{},{}/?replicaSet=MainRepSet'.format(repli
 
 client = MongoClient(uri)
 db = client.test
-# db.getSiblingDB('test').auth("main_admin", "abc123")
 agents_db = db.agents
 
 app = Flask(__name__)
@@ -21,8 +20,7 @@ app = Flask(__name__)
 def agents():
     if request.method == 'POST':
         agent = request.get_json(silent=True)
-        agent_id = agents_db.insert_one({'codename': 'agent007'}).inserted_id
-        print(agent_id)
+        agent_id = agents_db.insert({'codename': 'agent007'}).inserted_id
         return json.dumps({
             'result': True,
             'agent_id': agent_id,
