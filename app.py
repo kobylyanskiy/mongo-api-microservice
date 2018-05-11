@@ -6,6 +6,8 @@ client = MongoClient('mongod-0',
                      username='admin',
                      password='abc123',
                      authMechanism='MONGODB-CR')
+db = client.test
+agents = db.agents
 
 app = Flask(__name__)
 
