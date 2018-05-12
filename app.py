@@ -1,6 +1,7 @@
 import json
 from pymongo import MongoClient
 from flask import Flask, request
+from bson import ObjectId
 
 
 replica1 = 'mongod-0.mongodb-service.default.svc.cluster.local:27017'
@@ -16,6 +17,13 @@ agents_db = db.agents
 app = Flask(__name__)
 
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+
 @app.route('/agents', methods=['GET', 'POST'])
 def agents():
     if request.method == 'POST':
@@ -23,7 +31,7 @@ def agents():
         agent_id = agents_db.insert_one({'codename': 'agent007'}).inserted_id
         return json.dumps({
             'result': True,
-            'agent_id': agent_id,
+            'agent_id': JSONEncoder().encode(agent_id),
         })
     else:
         return json.dumps({
