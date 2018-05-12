@@ -38,7 +38,7 @@ def agents():
         return json.dumps({
             'result': True,
             'agent_id': JSONEncoder().encode(agent_id),
-            'error_message': 'Agent with this codename already exists',
+            'error_message': None,
         })
     else:
         return json.dumps({
@@ -54,9 +54,12 @@ def get_agent(codename):
         print(agent)
         return json.dumps({'result': True})
     else:
+        agent = db.agents.findOne(
+            { 'codename': codename }
+        )
         return json.dumps({
             'result': True,
-            'agent': {'codename': 'codename'}
+            'agent': json.dumps(agent)
         })
 
 
