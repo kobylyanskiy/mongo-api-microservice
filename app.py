@@ -35,6 +35,12 @@ def agents():
                 'result': False,
                 'error_message': 'Agent with this codename already exists',
             })
+        except TypeError:
+            return json.dumps({
+                'result': False,
+                'error_message': 'Incorrect input data',
+            })
+
         return json.dumps({
             'result': True,
             'agent_id': JSONEncoder().encode(agent_id),
