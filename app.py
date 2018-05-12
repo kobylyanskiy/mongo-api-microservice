@@ -1,5 +1,5 @@
 import json
-from pymongo import MongoClient
+import pymongo
 from flask import Flask, request
 from bson import ObjectId
 
@@ -10,7 +10,7 @@ replica3 = 'mongod-2.mongodb-service.default.svc.cluster.local:27017'
 uri = 'mongodb://main_admin:abc123@{},{},{}/?replicaSet=MainRepSet'.format(replica1, replica2, replica3)
 
 
-client = MongoClient(uri)
+client = pymongo.MongoClient(uri)
 db = client.test
 agents_db = db.agents
 
@@ -28,10 +28,17 @@ class JSONEncoder(json.JSONEncoder):
 def agents():
     if request.method == 'POST':
         agent = request.get_json(silent=True)
-        agent_id = agents_db.insert_one({'codename': 'agent007'}).inserted_id
+        try:
+            agent_id = agents_db.insert_one({'codename': 'agent007'}).inserted_id
+        except pymongo.errors.DuplicateKeyError:
+            return json.dumps({
+                'result': False,
+                'error_message': 'Agent with this codename already exists',
+            })
         return json.dumps({
             'result': True,
             'agent_id': JSONEncoder().encode(agent_id),
+            'error_message': 'Agent with this codename already exists',
         })
     else:
         return json.dumps({
