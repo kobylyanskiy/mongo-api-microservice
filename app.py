@@ -65,7 +65,7 @@ def get_agent(codename):
         )
         return json.dumps({
             'result': True,
-            'agent': JSONEncoder.encode(agent)
+            'agent': JSONEncoder().encode(agent)
         })
 
 
