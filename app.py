@@ -29,7 +29,7 @@ def agents():
     if request.method == 'POST':
         agent = request.get_json(silent=True)
         try:
-            agent_id = agents_db.insert_one(json.dumps(agent)).inserted_id
+            agent_id = agents_db.insert_one(dict(agent)).inserted_id
         except pymongo.errors.DuplicateKeyError:
             return json.dumps({
                 'result': False,
