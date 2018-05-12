@@ -27,7 +27,7 @@ class JSONEncoder(json.JSONEncoder):
 @app.route('/agents', methods=['GET', 'POST'])
 def agents():
     if request.method == 'POST':
-        agent = request.get_json(silent=True)
+        agent = request.get_json(force=True)
         try:
             agent_id = agents_db.insert_one(dict(agent)).inserted_id
         except pymongo.errors.DuplicateKeyError:
