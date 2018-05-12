@@ -60,7 +60,7 @@ def get_agent(codename):
         print(agent)
         return json.dumps({'result': True})
     else:
-        agent = db.agents.findOne(
+        agent = db.agents.find_one(
             { 'codename': codename }
         )
         return json.dumps({
