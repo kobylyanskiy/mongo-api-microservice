@@ -60,13 +60,19 @@ def get_agent(codename):
         db.agents.find_and_modify(query={'codename':codename}, update={"$set": dict(agent)}, upsert=False, full_response= True)
         return json.dumps({'result': True})
     else:
-        agent = db.agents.find_one(
-            { 'codename': codename }
-        )
-        return json.dumps({
-            'result': True,
-            'agent': JSONEncoder().encode(agent)
+        agent = db.agents.find_one({ 
+            'codename': codename
         })
+        if agent is not None:
+            return json.dumps({
+                'result': True,
+                'agent': JSONEncoder().encode(agent),
+            })
+        else:
+            return json.dumps({
+                'result': False,
+                'error_message': "Cannot find agent".format(codename),
+            })
 
 
 if __name__ == '__main__':
