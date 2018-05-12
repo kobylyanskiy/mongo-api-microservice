@@ -57,7 +57,7 @@ def agents():
 def get_agent(codename):
     if request.method == 'POST':
         agent = request.get_json(force=True)
-        db.agents.find_and_modify(query={'codename':codename}, update={"$set": dict(agent), upsert=False, full_response= True)
+        db.agents.find_and_modify(query={'codename':codename}, update={"$set": dict(agent)}, upsert=False, full_response= True)
         return json.dumps({'result': True})
     else:
         agent = db.agents.find_one(
