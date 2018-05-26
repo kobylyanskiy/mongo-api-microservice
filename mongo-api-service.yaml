@@ -5,9 +5,9 @@ metadata:
   labels:
     name: mongo-api
 spec:
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 5000
-  clusterIP: None
   selector:
     app: mongo-api
